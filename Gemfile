@@ -29,6 +29,9 @@ gem 'jbuilder'
 # for sign in and sign up system
 gem 'clearance'
 
+# for sign in and sign up system
+gem 'clearance'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '>= 4.0.1'
 
