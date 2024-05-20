@@ -1,0 +1,13 @@
+<h1>Новая задача</h1>
+<%= form_with(model: [@project, @task]) do |form| %>
+  <div>
+    <h5>Название задачи</h5>
+    <%= form.text_field :title %>
+  </div>
+  <div>
+    <h5>Описание задачи</h5>
+    <%= form.text_area :body %>
+  </div>
+
+  <%= form.submit 'Создать задачу'%>
+<% end %>
