@@ -40,7 +40,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+    redirect_to projects_path, alert: "У вас нет доступа к этому проекту"
   end
 
   private
