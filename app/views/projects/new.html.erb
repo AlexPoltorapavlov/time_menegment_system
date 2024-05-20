@@ -1,0 +1,17 @@
+<h2>Создание нового проекта</h2>
+
+<%= form_with model: @project, url: projects_path do |f| %>
+	<section class="new-project_field">
+    <div>
+      <h4>Название проекта</h4>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+    <div>
+      <h4>Описание проекта</h4>
+      <%= f.text_area :body, class: "form-control" %>
+    </div>
+    <div>
+      <%= f.submit "Сохранить проект", class: "btn btn-success" %>
+    </div>
+  </section>
+<% end %>
