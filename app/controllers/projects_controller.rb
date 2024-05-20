@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = Project.all
+    @projects = current_user.projects
   end
 
   def new
@@ -8,10 +8,11 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params)
+    @user = User.find(params[:user_id])
+    @project = @user.projects.create(project_params)
 
     if @project.save
-      redirect_to @project
+      redirect_to @project, notice: "Проект успешно создан"
     else
       flash.now[:error] = @project.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
