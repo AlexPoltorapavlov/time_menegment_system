@@ -13,14 +13,10 @@
 				<p><%= task.body %></p>
 				<hr>
 				<p>Всего потрачено времени на задачу:</p>
-				<p><%= task.duration %></p>
+				<p><%= task.duration / 60 %> ч. <%= task.duration % 60 / 60 %> м. <%= task.duration % 60 % 60 / 60 %> c</p>
+				<h4>Добавить время</h4>
+
 			</div>
 		</div>
 	<% end %>
 </div>
-
-
-<!--
-<%= button_to 'Изменить', edit_project_path %>
-<%= button_to 'Удалить' %>
--->
