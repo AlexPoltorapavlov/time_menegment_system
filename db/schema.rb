@@ -29,8 +29,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_144918) do
     t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "start_time", default: "2024-05-22 09:12:03", null: false
-    t.datetime "stop_time", default: "2024-05-22 09:12:03", null: false
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 
