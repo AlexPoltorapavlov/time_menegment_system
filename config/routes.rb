@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :projects do
-    resources :tasks
+    resources :tasks do
+      patch 'update_start_time', on: :member
+      patch 'update_stop_time', on: :member
+    end
   end
 
 end

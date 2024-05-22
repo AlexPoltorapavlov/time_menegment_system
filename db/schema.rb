@@ -10,25 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_22_090210) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_20_031517) do
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.text "body"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.datetime "duration", null: false
+    t.datetime "duration"
+    t.datetime "start_time"
+    t.datetime "stop_time"
     t.integer "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "start_time", default: "2024-05-22 09:12:03", null: false
-    t.datetime "stop_time", default: "2024-05-22 09:12:03", null: false
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 

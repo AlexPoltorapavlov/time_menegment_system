@@ -14,8 +14,14 @@
 				<p><%= task.body %></p>
 				<hr>
 				<p>Всего потрачено времени на задачу:</p>
+				<%= task.duration %>
 				<h4>Добавить время</h4>
-				
+				<p>
+					<%= button_to 'Начать отчет времени', update_start_time_project_task_path(@project, task), method: :patch, class: 'btn btn-succes' %>
+				</p>
+				<p>
+					<%= button_to 'Остановить отчет времени', update_stop_time_project_task_path(@project, task), method: :patch, class: 'btn btn-alert' %>
+				</p>
 			</div>
 		</div>
 	<% end %>

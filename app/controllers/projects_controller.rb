@@ -3,7 +3,6 @@ class ProjectsController < ApplicationController
     if current_user
       @projects = current_user.projects
     else
-      @home =
       redirect_to sign_in_path
     end
   end
