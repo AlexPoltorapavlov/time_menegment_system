@@ -14,23 +14,8 @@
 				<p><%= task.body %></p>
 				<hr>
 				<p>Всего потрачено времени на задачу:</p>
-				<p><%= (task.duration / 3600).floor %> ч. <%= ((task.duration % 3600) / 60).floor %> м. <%= task.duration % 60 %> c</p>
 				<h4>Добавить время</h4>
-				<%= form_with model: task, url: project_task_path(@project, task), method: :patch do |f| %>
-					<div>
-						<p>Часы</p>
-						<%= f.number_field :hours %>
-					</div>
-					<div>
-						<p>Минуты</p>
-						<%= f.number_field :minutes %>
-					</div>
-					<div>
-						<p>Секунды</p>
-						<%= f.number_field :seconds %>
-					</div>
-					<%= f.submit 'Добавить время' %>
-				<% end %>
+				
 			</div>
 		</div>
 	<% end %>
