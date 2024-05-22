@@ -22,26 +22,31 @@ class TasksController < ApplicationController
 
   def update
     @project = Project.find(params[:project_id])
+    @task = @project.tasks.find(params[:id])
+  end
+
+  def update_start_time
+    @project = Project.find(params[:project_id])
     @task = Task.find(params[:id])
 
-    calculate_duration
+    @task.start_time = Time.now
+    @task.save
+  end
 
-    @task.update_attribute(:duration, @task.duration + @duration)
-    redirect_to project_path(@project)
+  def update_stop_time
+    @project = Project.find(params[:project_id])
+    @task = Task.find(params[:id])
+
+    @task.stop_time = Time.now
+    @task.duration = @task.duration + (@task.stop_time - @task.start_time)
+    @task.start_time = Time.now
+    @task.save
   end
 
   private
 
   def task_params
-    params.require(:task).permit(:title, :body, :duration)
-  end
-
-  def calculate_duration
-    hour_seconds = params[:task][:hours].to_i * 3600
-    minute_seconds = params[:task][:minutes].to_i * 60
-    second_seconds = params[:task][:seconds].to_i
-
-    @duration = hour_seconds + minute_seconds + second_seconds
+    params.require(:task).permit(:title, :body, :duration, :start_time, :stop_time)
   end
 
 end

@@ -3,7 +3,9 @@ class CreateTasks < ActiveRecord::Migration[7.1]
     create_table :tasks do |t|
       t.string :title
       t.text :body
-      t.integer :duration
+      t.datetime :duration
+      t.datetime :start_time
+      t.datetime :stop_time
       t.references :project, null: false, foreign_key: true
 
       t.timestamps
