@@ -26,9 +26,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_031517) do
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.datetime "duration"
-    t.datetime "start_time"
-    t.datetime "stop_time"
+    t.integer "total_time", default: 0, null: false
+    t.datetime "last_started_at"
     t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
