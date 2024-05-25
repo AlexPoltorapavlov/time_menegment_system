@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_144918) do
 
   create_table "timers", force: :cascade do |t|
     t.datetime "started_at"
+    t.datetime "stoped_at"
     t.integer "total_time", default: 0, null: false
     t.bigint "task_id", null: false
     t.datetime "date_of_timer"
