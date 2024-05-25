@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @project = Project.find(params[:project_id])
-    @tasks = @project.tasks
+    @tasks = Task.joins(:project).where(projects: {user_id: current_user.id})
   end
 
   def new

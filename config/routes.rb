@@ -8,11 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
-  resources :projects do
-    resources :tasks do
-      patch 'update_start_time', on: :member
-      patch 'update_stop_time', on: :member
-    end
-  end
+  resources :projects
+  resources :tasks
 
 end
