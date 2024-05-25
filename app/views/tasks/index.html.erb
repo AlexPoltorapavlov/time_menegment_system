@@ -1,6 +1,31 @@
-<h1>Задачи</h1>
-<ul>
-  <% @tasks.each do |task| %>
-    <li><%= task.title %></li>
-  <% end %>
-</ul>
+<%= link_to '+ Новая задача', new_task_path, class: 'btn btn-outline-primary me-2' %>
+
+<h1> Ваши Задачи </h1>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col"><%= n = 0 %></th>
+			<th scope="col">Название задачи</th>
+			<th scope="col">Описание задачи</th>
+			<th scope="col">Всего времени затрачено</th>
+			<th scope="col">Проект</th>
+			<th scope="col">Дата создания задачи</th>
+			<th scope="col">Дата последнего обновления</th>
+		</tr>
+	</thead>
+	<tbody>
+	<% @tasks.each do |task| %>
+		<tr onclick="window.location='<%= task_path(task) %>'" style="cursor:pointer;">
+			<th scope="row"> <%= n = n + 1 %></th>
+			<td><%= task.title %></td>
+			<td><%= task.body[0...50] + '...' %></td>
+			<td><%= task.total_time %></td>
+			<td><%= task.project %></td>
+			<td><%= task.created_at %></td>
+			<td><%= task.updated_at %></td>
+		</tr>
+	<% end %>
+	</tbody>
+</table>
+
+
