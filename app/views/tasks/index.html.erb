@@ -19,8 +19,8 @@
 			<th scope="row"> <%= n = n + 1 %></th>
 			<td><%= task.title %></td>
 			<td><%= task.body[0...50] + '...' %></td>
-			<td><%= task.total_time %></td>
-			<td><%= task.project %></td>
+			<td>########</td>
+			<td><%= task.project.title %></td>
 			<td><%= task.created_at %></td>
 			<td><%= task.updated_at %></td>
 		</tr>

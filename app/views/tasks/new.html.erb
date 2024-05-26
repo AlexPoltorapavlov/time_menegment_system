@@ -1,5 +1,5 @@
 <h1>Новая задача</h1>
-<%= form_with(model: [@task, @projects], url: tasks_path, method: :post) do |form| %>
+<%= form_with(model: @task, url: tasks_path, method: :post) do |form| %>
   <div>
     <h5>Название задачи</h5>
     <%= form.text_field :title, class: 'form-control' %>
