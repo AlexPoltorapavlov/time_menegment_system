@@ -1,6 +1,6 @@
 class TimersController < ApplicationController
-  before_action :set_task, only: [:index, :create, :stop, :edit, :update]
-  before_action :set_timer, only: [:stop, :edit, :update]
+  before_action :set_task, only: [:index, :create, :stop, :edit, :update, :destroy]
+  before_action :set_timer, only: [:stop, :edit, :update, :destroy]
 
   def index
     @timers = @task.timers
@@ -36,6 +36,11 @@ class TimersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @timer.destroy
+    redirect_to @task
   end
 
   private
