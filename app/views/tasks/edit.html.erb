@@ -1,0 +1,17 @@
+<h1>Редактировать задачу</h1>
+<%= form_with(model: @task, url: task_path(@task), method: :patch) do |form| %>
+  <div>
+    <h5>Название задачи</h5>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+  <div>
+    <h5>Описание задачи</h5>
+    <%= form.text_area :body, class: 'form-control' %>
+  </div>
+  <div>
+    <h5>Проект</h5>
+    <%= form.collection_select :project_id, @projects, :id, :title, class: 'form form-select'%>
+  </div>
+
+  <%= form.submit 'Сохранить задачу'%>
+<% end %>
