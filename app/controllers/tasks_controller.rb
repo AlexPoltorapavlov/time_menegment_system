@@ -37,10 +37,14 @@ class TasksController < ApplicationController
     end
   end
 
-
   def edit
     @task = Task.find(params[:id])
     @projects = current_user.projects
+  end
+
+  def destroy
+    @task = Task.find(params[:id])
+    redirect_to tasks_path
   end
 
   private
