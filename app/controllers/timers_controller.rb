@@ -17,4 +17,16 @@ class TimersController < ApplicationController
     redirect_to @task
   end
 
+  def update
+    @task = Task.find(params[:task_id])
+    @timer = @task.timers.find(params[:id])
+
+    if @timer.update(:stoped_at => Time.now, total_time: (Time.now - @timer.started_at).to_i)
+      flash[:notice] = "Таймер успешно обновлен"
+    else
+      flash[:alert] = "Не удалось обновить таймер"
+    end
+    redirect_to @task
+  end
+
 end
