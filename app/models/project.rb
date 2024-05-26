@@ -4,4 +4,7 @@ class Project < ApplicationRecord
 
   validates :title, presence: true, length: { minimum: 5 }
   validates :body, presence: true, length: { minimum: 5 }
+  has_many :tasks, dependent: :destroy
+  validates :title, presence: true, length: { minimum: 5 }
+  validates :body, presence: true, length: { minimum: 5 }
 end
