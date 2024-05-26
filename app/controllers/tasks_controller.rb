@@ -26,8 +26,21 @@ class TasksController < ApplicationController
   end
 
   def update
-    @project = Project.find(params[:project_id])
-    @task = @project.tasks.find(params[:id])
+    @task = Task.find(params[:id])
+
+    if @task.update(task_params)
+      flash[:notice] = 'Задача успешно сохранена'
+      redirect_to @task
+    else
+      flash[:error] = @task.errors.full_messages.join(", ")
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+
+  def edit
+    @task = Task.find(params[:id])
+    @projects = current_user.projects
   end
 
   private
@@ -35,5 +48,4 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title, :body, :project_id)
   end
-
 end
