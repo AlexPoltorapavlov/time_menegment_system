@@ -1,12 +1,16 @@
 <h1>Новая задача</h1>
-<%= form_with(model: [@project, @task]) do |form| %>
+<%= form_with(model: [@task, @projects], url: tasks_path, method: :post) do |form| %>
   <div>
     <h5>Название задачи</h5>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, class: 'form-control' %>
   </div>
   <div>
     <h5>Описание задачи</h5>
-    <%= form.text_area :body %>
+    <%= form.text_area :body, class: 'form-control' %>
+  </div>
+	<div>
+    <h5>Проект</h5>
+		<%= form.collection_select :project_id, @projects, :id, :title, class: 'form form-select'%>
   </div>
 
   <%= form.submit 'Создать задачу'%>
