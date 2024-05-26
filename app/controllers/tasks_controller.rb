@@ -4,18 +4,24 @@ class TasksController < ApplicationController
   end
 
   def new
-    @project = Project.find(params[:project_id])
-    @task = @project.tasks.build
+    @task = Task.new
+    @projects = current_user.projects
+  end
+
+  def show
+    @task = Task.find(params[:id])
   end
 
   def create
-    @project = Project.find(params[:project_id])
-    @task = @project.tasks.build(task_params)
+    @projects = current_user.projects
+    @task = Task.new(task_params)
 
     if @task.save
-      redirect_to project_path(@project), notice: 'Задача была успешно создана'
+      flash[:notice] = 'Задача успешно создана'
+      redirect_to @task
     else
-      render :new
+      flash[:error] = @task.error.full_messages.join(", ")
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -24,28 +30,10 @@ class TasksController < ApplicationController
     @task = @project.tasks.find(params[:id])
   end
 
-  def update_start_time
-    @project = Project.find(params[:project_id])
-    @task = Task.find(params[:id])
-
-    @task.start_time = Time.now
-    @task.save
-  end
-
-  def update_stop_time
-    @project = Project.find(params[:project_id])
-    @task = Task.find(params[:id])
-
-    @task.stop_time = Time.now
-    @task.duration = @task.duration + (@task.stop_time - @task.start_time)
-    @task.start_time = Time.now
-    @task.save
-  end
-
   private
 
   def task_params
-    params.require(:task).permit(:title, :body, :duration, :start_time, :stop_time)
+    params.require(:task).permit(:title, :body, :project_id)
   end
 
 end
