@@ -37,7 +37,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_144918) do
     t.datetime "stoped_at"
     t.integer "total_time", default: 0, null: false
     t.bigint "task_id", null: false
-    t.datetime "date_of_timer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["task_id"], name: "index_timers_on_task_id"

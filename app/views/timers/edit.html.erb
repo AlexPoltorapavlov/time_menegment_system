@@ -1,0 +1,19 @@
+<h3>Редактировать время</h3>
+<%= @timer.total_time / 3600 %>:<%= (@timer.total_time % 3600) / 60 %>:<%= @timer.total_time % 60 %>
+<div class='card'>
+  <%= form_with(model: [@task, @timer], url: task_timer_path(@task, @timer), method: :patch ) do |f| %>
+    <div>
+      <h4> Сколько времени было потрачено? </h4>
+      <p>
+        <%= f.number_field :hours, value: @timer.total_time / 3600 %> часов
+      </p>
+      <p>
+        <%= f.number_field :minutes, value: (@timer.total_time % 3600) / 60 %> минут
+      </p>
+      <p>
+        <%= f.number_field :seconds, value: @timer.total_time % 60 %> секунд
+      </p>
+    </div>
+    <%= f.submit 'Сохранить время', class: 'btn btn-secondary' %>
+  <% end %>
+</div>
