@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :projects
-  resources :tasks
+  resources :tasks do
+    resources :timers
+  end
 
 end
