@@ -1,4 +1,13 @@
-<%= link_to 'Редактировать', edit_task_path, class: 'btn btn-outline-primary me-2' %>
-<h4><%= @task.title %></h4>
+<h1><%= @task.title %></h1>
 <p><%= @task.body %></p>
-<%= button_to 'Начать отчет времени', task_timers_path(@task.id), method: :post %>
+
+<% last_timer = @task.timers.order(updated_at: :desc).first %>
+
+<% if last_timer && last_timer.stoped_at.nil? %>
+  <!-- Если есть активный таймер -->
+  <p>Таймер начался в: <%= last_timer.started_at %></p>
+  <%= button_to "Закончить отчет", task_timer_path(@task, last_timer), method: :patch, class: 'btn btn-danger' %>
+<% else %>
+  <!-- Если нет активного таймера -->
+  <%= button_to "Начать новый таймер", task_timers_path(@task), method: :post, class: 'btn btn-primary' %>
+<% end %>
