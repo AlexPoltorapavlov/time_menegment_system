@@ -16,4 +16,6 @@
     </div>
     <%= f.submit 'Сохранить время', class: 'btn btn-secondary' %>
   <% end %>
+	<hr>
+	<%= button_to 'Удалить запись', task_timer_path(@task, @timer), method: :delete, class: 'btn btn-danger' %>
 </div>
