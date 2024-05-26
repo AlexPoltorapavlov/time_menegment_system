@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   resources :projects
   resources :tasks do
-    resources :timers
+    resources :timers do
+      member do
+        patch :stop
+      end
+    end
   end
 
 end
