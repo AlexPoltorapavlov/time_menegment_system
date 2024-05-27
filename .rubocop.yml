@@ -1,0 +1,107 @@
+# .rubocop.yml
+
+require:
+  - rubocop-rails
+  - rubocop-performance
+
+AllCops:
+  # Включаем автокоррекцию (по умолчанию отключена, но полезна для проектов)
+  AutoCorrect: true
+  # Включаем таргет Rails фреймворка
+  TargetRailsVersion: 7.1
+
+  # Включаем все файлы
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+
+  # Настройки отдельных файлов
+  Include:
+    - '**/*.rb'
+    - '**/*.rake'
+    - 'Rakefile'
+    - 'Gemfile'
+
+# Настройки для Rails
+Rails:
+  Enabled: true
+
+# Настройки Layout
+Layout/LineLength:
+  Max: 120  # Максимальное количество символов в строке
+
+Layout/IndentationWidth:
+  Width: 2  # Количество пробелов для отступов
+
+Layout/BlockAlignment:
+  EnforcedStyle: end
+
+# Настройки Style
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes # Используем одинарные кавычки
+
+Style/Documentation:
+  Enabled: false
+
+# Настройки для других Metrics
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+
+Metrics/MethodLength:
+  Max: 20  # Максимальное количество строк в методе
+
+# Настройки Naming
+Naming/VariableName:
+  Enabled: true
+
+Naming/PredicateName:
+  Enabled: true
+
+# Настройки Lint
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+
+Lint/UselessAssignment:
+  Enabled: true
+
+# Настройки Performance
+Performance/Casecmp:
+  Enabled: true
+
+Performance/RedundantMerge:
+  Enabled: true
+
+# Настройки Security
+Security/YAMLLoad:
+  Enabled: true
+
+# Настройки Rails
+Rails/DynamicFindBy:
+  Enabled: true
+
+Rails/SkipsModelValidations:
+  Enabled: true
+
+Rails/Delegate:
+  Enabled: true
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: true
+
+# Возможно, потребуется настройка для конкретного проекта
+# Performance массивов, хешей и строк
+Performance/CollectionLiteralLength:
+  Max: 5
+
+# Раскомментируйте это правило, чтобы проверить наличие дебаггера
+# Lint/Debugger:
+
+# Раскомментируйте это правило, чтобы избежать файлов с пробелами
+# Layout/TrailingWhitespace:
