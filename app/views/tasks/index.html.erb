@@ -19,7 +19,7 @@
 			<th scope="row"> <%= n = n + 1 %></th>
 			<td><%= task.title %></td>
 			<td><%= task.body[0...50] + '...' %></td>
-			<td>########</td>
+			<td> <%= task.timers.sum(:total_time) / 3600 %>:<%= task.timers.sum(:total_time) % 3600 / 60 %>:<%= task.timers.sum(:total_time) % 60 %> </td>
 			<td><%= task.project.title %></td>
 			<td><%= task.created_at %></td>
 			<td><%= task.updated_at %></td>
