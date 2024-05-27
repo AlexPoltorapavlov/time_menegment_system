@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
     @project = @user.projects.create(project_params)
 
     if @project.save
-      redirect_to @project, notice: "Проект успешно создан"
+      redirect_to @project, notice: 'Проект успешно создан'
     else
       flash.now[:error] = @project.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
@@ -24,11 +24,11 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project = Project.find (params[:id])
+    @project = Project.find(params[:id])
   end
 
   def update
-    @project = Project.find (params[:id])
+    @project = Project.find(params[:id])
     if @project.update(project_params)
       redirect_to @project
     else
@@ -38,15 +38,15 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find (params[:id])
+    @project = Project.find(params[:id])
     @project.destroy
     redirect_to projects_path
   end
 
   def show
     @project = current_user.projects.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-    redirect_to projects_path, alert: "У вас нет доступа к этому проекту"
+  rescue ActiveRecord::RecordNotFound
+    redirect_to projects_path, alert: 'У вас нет доступа к этому проекту'
   end
 
   private
@@ -54,5 +54,4 @@ class ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(:title, :body)
   end
-
 end

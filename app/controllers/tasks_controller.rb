@@ -1,27 +1,31 @@
 class TasksController < ApplicationController
   def index
     @projects = current_user.projects
-    @tasks = Task.joins(:project).where(projects: {user_id: current_user.id})
+    @tasks = Task.joins(:project).where(projects: { user_id: current_user.id })
 
-    if params[:project_id].present?
-      @tasks = Task.where(project_id: params[:project_id])
-    else
-      @tasks = Task.all
-    end
+    @tasks = if params[:project_id].present?
+               Task.where(project_id: params[:project_id])
+             else
+               Task.all
+             end
 
     # сортировка
-    case params[:sort]
-    when 'title'
-      @tasks = @tasks.order(title: :asc)
-    when 'created_at'
-      @tasks = @tasks.order(created_at: :asc)
-    when 'updated_at'
-      @tasks = @tasks.order(updated_at: :asc)
-    when 'project'
-      @tasks = @tasks.includes(:project).order('projects.title')
-    else
-      @tasks = @tasks.order(created_at: :desc) # сортировка по умолчанию
-    end
+    sorting
+  end
+
+  def sorting
+    @tasks = case params[:sort]
+             when 'title'
+               @tasks.order(title: :asc)
+             when 'created_at'
+               @tasks.order(created_at: :asc)
+             when 'updated_at'
+               @tasks.order(updated_at: :asc)
+             when 'project'
+               @tasks.includes(:project).order('projects.title')
+             else
+               @tasks.order(created_at: :desc) # сортировка по умолчанию
+             end
   end
 
   def new
@@ -33,20 +37,18 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     # Сортировка таймеров
-    if params[:sort]
-      case params[:sort]
-      when 'total_time'
-        @timers = @task.timers.order(total_time: :desc)
-      when 'updated_at'
-        @timers = @task.timers.order(updated_at: :desc)
-      else
-        @timers = @task.timers.order(created_at: :desc) # Сортировка по умолчанию
-      end
-    else
-      @timers = @task.timers.order(created_at: :desc) # Сортировка по умолчанию
-    end
-
-    last_timer = @timers.first
+    @timers = if params[:sort]
+                case params[:sort]
+                when 'total_time'
+                  @task.timers.order(total_time: :desc)
+                when 'updated_at'
+                  @task.timers.order(updated_at: :desc)
+                else
+                  @task.timers.order(created_at: :desc) # Сортировка по умолчанию
+                end
+              else
+                @task.timers.order(created_at: :desc) # Сортировка по умолчанию
+              end
   end
 
   def create
@@ -57,7 +59,7 @@ class TasksController < ApplicationController
       flash[:notice] = 'Задача успешно создана'
       redirect_to @task
     else
-      flash[:error] = @task.errors.full_messages.join(", ")
+      flash[:error] = @task.errors.full_messages.join(', ')
       render :new, status: :unprocessable_entity
     end
   end
@@ -69,7 +71,7 @@ class TasksController < ApplicationController
       flash[:notice] = 'Задача успешно сохранена'
       redirect_to @task
     else
-      flash[:error] = @task.errors.full_messages.join(", ")
+      flash[:error] = @task.errors.full_messages.join(', ')
       render :edit, status: :unprocessable_entity
     end
   end
