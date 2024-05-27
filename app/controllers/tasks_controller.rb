@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
+  before_action :set_projects, only: %i[index new create edit]
+  before_action :set_task, only: %i[show update edit destroy]
+
   def index
-    @projects = current_user.projects
     @tasks = Task.joins(:project).where(projects: { user_id: current_user.id })
 
     @tasks = if params[:project_id].present?
@@ -10,10 +12,10 @@ class TasksController < ApplicationController
              end
 
     # сортировка
-    sorting
+    sorting_tasks
   end
 
-  def sorting
+  def sorting_tasks
     @tasks = case params[:sort]
              when 'title'
                @tasks.order(title: :asc)
@@ -30,13 +32,14 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @projects = current_user.projects
   end
 
   def show
-    @task = Task.find(params[:id])
-
     # Сортировка таймеров
+    sorting_timers
+  end
+
+  def sorting_timers
     @timers = if params[:sort]
                 case params[:sort]
                 when 'total_time'
@@ -52,7 +55,6 @@ class TasksController < ApplicationController
   end
 
   def create
-    @projects = current_user.projects
     @task = Task.new(task_params)
 
     if @task.save
@@ -65,8 +67,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
-
     if @task.update(task_params)
       flash[:notice] = 'Задача успешно сохранена'
       redirect_to @task
@@ -76,17 +76,21 @@ class TasksController < ApplicationController
     end
   end
 
-  def edit
-    @task = Task.find(params[:id])
-    @projects = current_user.projects
-  end
+  def edit; end
 
   def destroy
-    @task = Task.find(params[:id])
     redirect_to tasks_path
   end
 
   private
+
+  def set_projects
+    @projects = current_user.projects
+  end
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
   def task_params
     params.require(:task).permit(:title, :body, :project_id)
