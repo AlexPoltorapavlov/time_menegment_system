@@ -31,6 +31,22 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+
+    # Сортировка таймеров
+    if params[:sort]
+      case params[:sort]
+      when 'total_time'
+        @timers = @task.timers.order(total_time: :desc)
+      when 'updated_at'
+        @timers = @task.timers.order(updated_at: :desc)
+      else
+        @timers = @task.timers.order(created_at: :desc) # Сортировка по умолчанию
+      end
+    else
+      @timers = @task.timers.order(created_at: :desc) # Сортировка по умолчанию
+    end
+
+    last_timer = @timers.first
   end
 
   def create

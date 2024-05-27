@@ -10,10 +10,10 @@
   </div>
   <div>
     <h5>Проект</h5>
-    <%= form.collection_select :project_id, @projects, :id, :title, class: 'form form-select'%>
+    <%= form.collection_select :project_id, @projects, :id, :title %>
   </div>
 
-  <%= form.submit 'Сохранить задачу'%>
+  <%= form.submit 'Сохранить задачу', class: 'btn btn-outline-primary'%>
 <% end %>
 
 <hr>
