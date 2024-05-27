@@ -2,8 +2,8 @@
 
 # Controller of projects
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[edit update destroy]
-  before_action :ser_user, only: %i[create]
+  before_action :set_project, only: %i[edit update destroy show]
+  before_action :set_user, only: %i[create]
 
   def index
     if current_user
@@ -44,15 +44,12 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
-  def show
-    @project = current_user.projects.find!(params[:id])
-    redirect_to projects_path, alert: 'У вас нет доступа к этому проекту'
-  end
+  def show; end
 
   private
 
   def set_project
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find(params[:id])
   end
 
   def set_user
