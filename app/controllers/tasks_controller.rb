@@ -1,6 +1,27 @@
 class TasksController < ApplicationController
   def index
+    @projects = current_user.projects
     @tasks = Task.joins(:project).where(projects: {user_id: current_user.id})
+
+    if params[:project_id].present?
+      @tasks = Task.where(project_id: params[:project_id])
+    else
+      @tasks = Task.all
+    end
+
+    # сортировка
+    case params[:sort]
+    when 'title'
+      @tasks = @tasks.order(title: :asc)
+    when 'created_at'
+      @tasks = @tasks.order(created_at: :asc)
+    when 'updated_at'
+      @tasks = @tasks.order(updated_at: :asc)
+    when 'project'
+      @tasks = @tasks.includes(:project).order('projects.title')
+    else
+      @tasks = @tasks.order(created_at: :desc) # сортировка по умолчанию
+    end
   end
 
   def new
@@ -20,7 +41,7 @@ class TasksController < ApplicationController
       flash[:notice] = 'Задача успешно создана'
       redirect_to @task
     else
-      flash[:error] = @task.error.full_messages.join(", ")
+      flash[:error] = @task.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
   end
