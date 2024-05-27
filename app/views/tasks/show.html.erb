@@ -2,12 +2,12 @@
 <h1><%= @task.title %></h1>
 <p><%= @task.body %></p>
 
-<% last_timer = @task.timers.order(updated_at: :desc).first %>
+<% last_timer = @timers.first %>
 
 <% if last_timer && last_timer.stoped_at.nil? %>
   <!-- Если есть активный таймер -->
   <%= button_to "Закончить отчет", stop_task_timer_path(@task, last_timer), method: :patch, class: 'btn btn-danger' %>
-	<p>Таймер начался в: <%= last_timer.started_at %></p>
+  <p>Таймер начался в: <%= last_timer.started_at %></p>
 <% else %>
   <!-- Если нет активного таймера -->
   <%= button_to "Начать новый таймер", task_timers_path(@task), method: :post, class: 'btn btn-primary' %>
@@ -15,22 +15,22 @@
 
 <h3> Все секундомеры </h3>
 <table class="table table-striped">
-	<thead>
-		<tr>
-			<th scope="col"><%= n = 0 %></th>
-			<th scope="col">Итоговое время</th>
-			<th scope="col">Дата последнего изменения</th>
-			<th scope="col"></th>
-		</tr>
-	</thead>
-	<tbody>
-	<% @task.timers.each do |timer| %>
-		<tr>
-			<th scope="row"> <%= n = n + 1 %></th>
-			<td><%= timer.total_time / 3600 %>:<%= (timer.total_time % 3600) / 60 %>:<%= timer.total_time % 60 %></td>
-			<td><%= timer.updated_at %></td>
-			<td><%= link_to 'Редактировать', edit_task_timer_path(@task, timer) %></td>
-		</tr>
-	<% end %>
-	</tbody>
+  <thead>
+    <tr>
+      <th scope="col"><%= n = 0 %></th>
+      <th scope="col"><%= link_to 'Итоговое время', task_path(@task, sort: 'total_time') %> </th>
+      <th scope="col"><%= link_to 'Дата последнего изменения', task_path(@task, sort: 'updated_at') %></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @timers.each do |timer| %>
+      <tr>
+        <th scope="row"><%= n = n + 1 %></th>
+        <td><%= timer.total_time / 3600 %>:<%= (timer.total_time % 3600) / 60 %>:<%= timer.total_time % 60 %></td>
+        <td><%= timer.updated_at %></td>
+        <td><%= link_to 'Редактировать', edit_task_timer_path(@task, timer) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
