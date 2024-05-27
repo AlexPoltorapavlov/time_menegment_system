@@ -1,4 +1,10 @@
+# frozen_string_literal: false
+
+# Controller of projects
 class ProjectsController < ApplicationController
+  before_action :set_project, only: %i[edit update destroy]
+  before_action :ser_user, only: %i[create]
+
   def index
     if current_user
       @projects = current_user.projects
@@ -12,7 +18,6 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @user = User.find(params[:user_id])
     @project = @user.projects.create(project_params)
 
     if @project.save
@@ -23,12 +28,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def edit
-    @project = Project.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @project = Project.find(params[:id])
     if @project.update(project_params)
       redirect_to @project
     else
@@ -38,7 +40,6 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
     redirect_to projects_path
   end
@@ -50,6 +51,14 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  def set_user
+    @user = User.find(params[:user_id])
+  end
 
   def project_params
     params.require(:project).permit(:title, :body)
