@@ -1,0 +1,12 @@
+h2 Создание нового проекта
+
+= form_with model: @project, url: projects_path(user_id: current_user.id) do |f|
+  section.new-project_field
+    div
+      h4 Название проекта
+      = f.text_field :title, class: "form-control"
+    div
+      h4 Описание проекта
+      = f.text_area :body, class: "form-control"
+    div
+      = f.submit "Сохранить проект", class: "btn btn-success"

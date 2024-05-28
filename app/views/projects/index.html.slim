@@ -1,0 +1,21 @@
+= link_to '+ Новый проект', new_project_path, class: 'btn btn-outline-primary me-2'
+
+h1 Ваши проекты
+table.table.table-striped
+  thead
+    tr
+      th scope="col"
+        = n = 0
+      th scope="col" Название проекта
+      th scope="col" Описание проекта
+      th scope="col" Дата создания проекта
+      th scope="col" Дата последнего обновления
+  tbody
+    - @projects.each do |project|
+      tr onclick="window.location='#{project_path(project)}'" style="cursor:pointer;"
+        th scope="row"
+          = n = n + 1
+        td = project.title
+        td = project.body[0...50] + '...'
+        td = project.created_at
+        td = project.updated_at
