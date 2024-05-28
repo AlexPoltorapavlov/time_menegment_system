@@ -1,0 +1,44 @@
+= link_to 'Редактировать', edit_task_path(@task), class: 'btn btn-outline-primary'
+
+h1 = @task.title
+
+p = @task.body
+
+- last_timer = @timers.first
+
+- if last_timer && last_timer.stoped_at.nil?
+  / Если есть активный таймер
+  = button_to "Закончить отчет", stop_task_timer_path(@task, last_timer), method: :patch, class: 'btn btn-danger'
+  p
+    | Таймер начался в:
+    = last_timer.started_at
+- else
+  / Если нет активного таймера
+  = button_to "Начать новый таймер", task_timers_path(@task), method: :post, class: 'btn btn-primary'
+
+h3 Все секундомеры
+
+table.table.table-striped
+  thead
+    tr
+      th scope="col"
+        = n = 0
+      th scope="col"
+        = link_to 'Итоговое время', task_path(@task, sort: 'total_time')
+      th scope="col"
+        = link_to 'Дата последнего изменения', task_path(@task, sort: 'updated_at')
+      th scope="col"
+
+  tbody
+    - @timers.each do |timer|
+      tr
+        th scope="row"
+          = n = n + 1
+        td
+          = timer.total_time / 3600
+          | :
+          = (timer.total_time % 3600) / 60
+          | :
+          = timer.total_time % 60
+        td = timer.updated_at
+        td = link_to 'Редактировать', edit_task_timer_path(@task, timer)
