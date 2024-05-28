@@ -1,0 +1,17 @@
+h1 Редактировать задачу
+= form_with(model: @task, url: task_path(@task), method: :patch) do |form|
+  div
+    h5 Название задачи
+    = form.text_field :title, class: 'form-control' 
+  div
+    h5 Описание задачи
+    = form.text_area :body, class: 'form-control'
+  div
+    h5 Проект
+    = form.collection_select :project_id, @projects, :id, :title 
+
+  = form.submit 'Сохранить задачу', class: 'btn btn-outline-primary'
+
+hr
+
+= button_to 'Удалить задачу', task_path(@task), method: :delete, class: 'btn btn-danger'
