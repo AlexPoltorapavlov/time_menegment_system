@@ -5,11 +5,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.joins(:project).where(projects: { user_id: current_user.id })
 
-    @tasks = if params[:project_id].present?
-               Task.where(project_id: params[:project_id])
-             else
-               Task.all
-             end
+    @tasks = @tasks.where(project_id: params[:project_id]) if params[:project_id].present?
 
     # сортировка
     sorting_tasks
