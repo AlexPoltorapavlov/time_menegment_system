@@ -1,0 +1,45 @@
+= link_to '+ Новая задача', new_task_path, class: 'btn btn-outline-primary me-2'
+
+h1 Ваши Задачи
+
+/ Фильтр по проектам
+= form_with url: tasks_path, method: :get, local: true do 
+	div
+		= label_tag :project_id, 'Фильтр по проекту'
+		= select_tag :project_id, options_from_collection_for_select(@projects, :id, :title, params[:project_id]), include_blank: "Все проекты" 
+		= submit_tag 'Применить', class: 'btn btn-primary' 
+
+
+table class="table table-striped"
+	thead
+		tr
+			th scope="col" 
+				= n = 0 
+			th scope="col" 
+				= link_to 'Название задачи', tasks_path(sort: 'title', project_id: params[:project_id]) 
+			th scope="col" Описание задачи
+			th scope="col" Всего времени затрачено
+			th scope="col"
+				= link_to 'Проект', tasks_path(sort: 'project', project_id: params[:project_id]) 
+			th scope="col"
+				= link_to 'Дата создания задачи', tasks_path(sort: 'created_at', project_id: params[:project_id]) 
+			th scope="col"
+				= link_to 'Дата последнего обновления', tasks_path(sort: 'updated_at', project_id: params[:project_id]) 
+			th scope="col" 
+	tbody
+		- @tasks.each do |task| 
+			tr
+				th scope="row"
+					= n = n + 1 
+				td = task.title
+				td = task.body[0...50] + '...'
+				td 
+					= task.timers.sum(:total_time) / 3600 
+					|:
+					= task.timers.sum(:total_time) % 3600 / 60 
+					|:
+					= task.timers.sum(:total_time) % 60 
+				td = task.project.title 
+				td = task.created_at 
+				td = task.updated_at 
+				td = link_to 'Подробнее', task_path(task)
