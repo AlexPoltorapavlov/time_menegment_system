@@ -3,7 +3,6 @@ image: ruby:3.0.2
 before_script:
   - apt-get update -qq && apt-get install -y nodejs yarn
   - bundle install
-  - yarn install
   - rails db:create
   - rails db:migrate
   - rails db:seed
