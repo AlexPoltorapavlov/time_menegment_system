@@ -1,13 +1,5 @@
 image: ruby:3.0.2
 
-services:
-  - postgres:latest
-
-variables:
-  POSTGRES_DB: time_menegment_system
-  POSTGRES_USER: time_menegment_test
-  POSTGRES_PASSWORD: time_menegment_test
-
 before_script:
   - apt-get update -qq && apt-get install -y nodejs yarn
   - bundle install
