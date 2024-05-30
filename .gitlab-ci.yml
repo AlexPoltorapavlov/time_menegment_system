@@ -1,4 +1,4 @@
-image: ruby:3.2.2
+image: ruby:3.0.2
 
 before_script:
   - apt update -qq 
