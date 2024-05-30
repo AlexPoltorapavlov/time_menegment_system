@@ -1,5 +1,4 @@
 test:
-  image: registry.gitlab.com/gitlab-org/build/cng/alpine-certificates:latest
   stage: test
   script:
     - bundle install
