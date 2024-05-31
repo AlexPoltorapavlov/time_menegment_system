@@ -1,21 +1,15 @@
 image: ruby:3.0.2
 
 before_script:
-  - apt-get update -qq && apt-get install -y nodejs yarn
+  - apt update -qq 
+  - gem install bundler --no-document
   - bundle install
-  - rails db:create
-  - rails db:migrate
-  - rails db:seed
 
 stages:
-  - test
+  - lint
+  
+ruby_linter_job:
+  stage: lint
 
-cache:
-  paths:
-    - vendor/ruby
-    - node_modules
-
-rubocop-lint:
-  stage: test
   script:
     - bundle exec rubocop
