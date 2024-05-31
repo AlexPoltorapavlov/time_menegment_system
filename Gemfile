@@ -29,9 +29,6 @@ gem 'jbuilder'
 # for sign in and sign up system
 gem 'clearance'
 
-# for sign in and sign up system
-gem 'clearance'
-
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '>= 4.0.1'
 
@@ -46,10 +43,6 @@ gem 'tzinfo-data', platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
-
-gem 'bootstrap', '~> 5.3.3'
-
-gem 'sassc-rails'
 
 gem 'bootstrap', '~> 5.3.3'
 
