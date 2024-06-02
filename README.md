@@ -50,7 +50,7 @@ rails db:seed
 
 ## Запуск проекта:
 
-1. апустите сервер Rails
+1. Запустите сервер Rails
 ```bash
 rails server
 ```
