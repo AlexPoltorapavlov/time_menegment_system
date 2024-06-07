@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Создаем кнопку
   const button = document.createElement('button');
-  button.innerText = 'Время';
+  button.innerText = 'Поиск';
   button.style.position = 'fixed';
   button.style.right = '20px';
   button.style.bottom = '20px';
@@ -11,14 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
   button.style.border = 'none';
   button.style.borderRadius = '10px'
   button.style.cursor = 'pointer';
-  button.style.display = 'none'; // Изначально скрыта
+  //button.style.display = 'none'; // Изначально скрыта
 
   document.body.appendChild(button);
 
   // Показать кнопку через 5 секунд
-  setTimeout(() => {
-    button.style.display = 'block';
-  }, 5000);
+  //setTimeout(() => {
+  button.style.display = 'block';
+  //}, 5000);
 
   // Обработчик для кнопки
   button.addEventListener('click', () => {
@@ -26,32 +26,67 @@ document.addEventListener('DOMContentLoaded', () => {
     button.style.display = 'none';
 
     // Создаем окно
-    const timeWindow = document.createElement('div');
-    timeWindow.style.position = 'fixed';
-    timeWindow.style.right = '20px';
-    timeWindow.style.bottom = '20px';
-    timeWindow.style.padding = '20px';
-    timeWindow.style.backgroundColor = 'white';
-    timeWindow.style.border = '1px solid #ddd';
-    timeWindow.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.1)';
-    timeWindow.style.zIndex = '1000';
+    const searchWindow = document.createElement('div');
+    searchWindow.style.position = 'fixed';
+    searchWindow.style.right = '20px';
+    searchWindow.style.bottom = '20px';
+    searchWindow.style.padding = '30px';
+    searchWindow.style.backgroundColor = 'white';
+    //searchWindow.style.border = '1px solid #ddd';
+    searchWindow.style.borderRadius = '10px'
+    searchWindow.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.1)';
+    searchWindow.style.zIndex = '1000';
 
-    // Время
-    const timeDisplay = document.createElement('div');
-    timeDisplay.style.marginBottom = '10px';
-    timeWindow.appendChild(timeDisplay);
+    // div поисковой строки
+    const searchDiv = document.createElement('div');
+    searchDiv.className = 'input-group';
+    searchWindow.appendChild(searchDiv);
 
-    // Обновляем время каждую секунду
-    const updateTime = () => {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      timeDisplay.innerText = `${hours}:${minutes}:${seconds}`;
-    };
-    updateTime(); // Обновить время сразу
-    const intervalId = setInterval(updateTime, 1000);
+    // Создаем поисковую строку
+    const searchLine = document.createElement('input');
+    searchLine.type = 'text';
+    searchLine.placeholder = 'Введите запрос...';
+    //searchLine.style.width = '200px';
+    //searchLine.style.padding = '10px';
+    //searchLine.style.marginBottom = '10px';
+    //searchLine.style.border = '1px solid #ccc';
+    //searchLine.style.borderRadius = '4px';
+    //
+    // Использую класс из bootstrap, так быстрее прописывать стили.
+    searchLine.className = 'form-control rounded';
 
+    searchDiv.appendChild(searchLine);
+
+    // Кнопка для поиска
+    const searchButton = document.createElement('button');
+    searchButton.className = 'btn btn-primary';
+    searchButton.innerText = 'Найти';
+
+    // Обработчик поиска:
+    searchButton.addEventListener('click', () => {
+      const strLowCase = searchLine.value.toLowerCase();
+  
+      const data = [
+        { name: 'Сбер Банк', ticker: 'SBER' },
+        { name: 'МТС', ticker: 'MTSS' },
+        { name: 'Тинькофф групп', ticker: 'TCS' },
+        { name: 'Московская биржа', ticker: 'MOEX' }
+      ];
+
+      const searchData = data
+        .filter(item => item.name.toLowerCase().includes(strLowCase))
+        .map(item => item.ticker);
+
+      searchButton.style.display = 'none';
+      searchLine.style.display = 'none';
+
+      const searchOutputText = document.createElement('div');
+      searchOutputText.innerText = searchData.join(', ');
+      searchDiv.appendChild(searchOutputText);
+    });
+    
+    searchDiv.appendChild(searchButton);
+    
     // Кнопка закрытия окна
     const closeButton = document.createElement('button');
     closeButton.innerText = 'X';
@@ -62,16 +97,16 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButton.style.border = 'none';
     closeButton.style.cursor = 'pointer';
     closeButton.style.fontSize = '16px';
-    timeWindow.appendChild(closeButton);
+    searchWindow.appendChild(closeButton);
 
     // Обработчик закрытия окна
     closeButton.addEventListener('click', () => {
-      clearInterval(intervalId); // Останавливаем обновление времени
-      document.body.removeChild(timeWindow); // Удаляем окно
+      //clearInterval(intervalId); // Останавливаем обновление времени
+      document.body.removeChild(searchWindow); // Удаляем окно
       button.style.display = 'block'; // Показываем кнопку
     });
 
     // Добавляем окно к документу
-    document.body.appendChild(timeWindow);
+    document.body.appendChild(searchWindow);
   });
 });
