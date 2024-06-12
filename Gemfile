@@ -27,7 +27,7 @@ gem 'stimulus-rails'
 gem 'jbuilder'
 
 # for sign in and sign up system
-gem 'clearance'
+# gem 'clearance'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '>= 4.0.1'
