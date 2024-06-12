@@ -3,14 +3,10 @@
 # Controller of projects
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[edit update destroy show]
-  before_action :set_user, only: %i[create]
+  # before_action :set_user, only: %i[create]
 
   def index
-    if current_user
-      @projects = current_user.projects
-    else
-      redirect_to sign_in_path
-    end
+    @projects = Project.all
   end
 
   def new
@@ -49,12 +45,12 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    @project = current_user.projects.find(params[:id])
+    @project = Project.find(params[:id])
   end
 
-  def set_user
-    @user = User.find(params[:user_id])
-  end
+  # def set_user
+  #   @user = User.find(params[:user_id])
+  # end
 
   def project_params
     params.require(:project).permit(:title, :body)

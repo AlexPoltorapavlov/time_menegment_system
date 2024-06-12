@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show update edit destroy]
 
   def index
-    @tasks = Task.joins(:project).where(projects: { user_id: current_user.id })
+    @tasks = Task.all
 
     @tasks = @tasks.where(project_id: params[:project_id]) if params[:project_id].present?
 
@@ -75,13 +75,14 @@ class TasksController < ApplicationController
   def edit; end
 
   def destroy
+    @task.destroy
     redirect_to tasks_path
   end
 
   private
 
   def set_projects
-    @projects = current_user.projects
+    @projects = Project.all
   end
 
   def set_task
