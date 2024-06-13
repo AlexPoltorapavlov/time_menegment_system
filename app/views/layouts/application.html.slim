@@ -23,4 +23,15 @@ html
           li
             = link_to "Задачи", tasks_path, class: 'nav-link px-2'
         .col-md-3.text-end
+          - if user_signed_in?
+            = button_to "Выйти", destroy_user_session_path, method: :delete, class: "btn btn-outline-primary me-2"
+          - else
+            = button_to "Регистрация", new_user_registration_path, method: :get, class: "btn btn-outline-primary me-2"
+            = button_to "Войти", new_user_session_path, method: :get, class: "btn btn-outline-primary me-2"
+
       = yield
+
+      - if notice
+        p.notice = notice
+      - if alert
+        p.alert = alert
