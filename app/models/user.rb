@@ -6,4 +6,7 @@ class User < ApplicationRecord
 
   has_many :projects, dependent: :destroy
 
+  # validates :phonenumber, format: { with: /\A\+\d{8,15}\z/,
+  #                                   message: 'Неверный формат номера телефона' }
+  
 end
