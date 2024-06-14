@@ -23,4 +23,5 @@ html
           li
             = link_to "Задачи", tasks_path, class: 'nav-link px-2'
         .col-md-3.text-end
+          = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-primary'
       = yield
