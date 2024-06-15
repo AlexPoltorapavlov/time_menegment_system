@@ -27,10 +27,10 @@ html
         .col-md-3.text-end.d-flex.align-items-center
           .btn-group role="group" 
           - if !current_user.nil?
-            = button_to "Выйти", logout_path, method: :delete, class: 'btn btn-primary'
+            = button_to "Выйти", destroy_user_session_path, method: :delete, class: 'btn btn-primary'
           - else
-            = button_to "Войти", login_path, method: :get, class: 'btn btn-outline-primary me-md-2'
-            = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-outline-primary'
+            = button_to "Войти", new_user_session_path, method: :get, class: 'btn btn-outline-primary me-md-2'
+            = button_to "Регистрация", new_user_registration_path, method: :get, class: 'btn btn-outline-primary'
       
       - flash.each do |type, msg|
         - case type
