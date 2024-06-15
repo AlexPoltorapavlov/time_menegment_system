@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_path, notice: 'Успешный вход!' 
     else
-      flash.now[:alert] = 'Неверный email или пароль'
+      # flash.now[:alert] = 'Неверный email или пароль'
       render :new
     end
   end

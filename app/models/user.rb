@@ -11,6 +11,10 @@ class User < ApplicationRecord
 
   has_many :projects, dependent: :destroy
 
+  def authenticate(password)
+    BCrypt::Password.new(password_digest).is_password?(password)
+  end
+  
   private
 
   def downcase_email
@@ -21,8 +25,4 @@ class User < ApplicationRecord
     self.password_digest = BCrypt::Password.create(password) if password.present?
   end
 
-  def authenticate(password)
-    BCrypt::Password.new(password_digest).is_password?(password)
-  end
-  
 end

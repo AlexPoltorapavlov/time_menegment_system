@@ -23,5 +23,10 @@ html
           li
             = link_to "Задачи", tasks_path, class: 'nav-link px-2'
         .col-md-3.text-end
-          = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-primary'
+          - if !current_user.nil?
+            = button_to "Выйти", logout_path, method: :delete, class: 'btn btn-primary'
+          - else
+            = button_to "Войти", login_path, method: :get, class: 'btn btn-outline-primary'
+            = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-outline-primary'
+
       = yield

@@ -77,3 +77,5 @@ end
 
 gem 'rails-ujs', '~> 0.1.0'
 gem 'slim-rails'
+
+gem "bcrypt", "~> 3.1"
