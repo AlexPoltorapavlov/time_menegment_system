@@ -10,8 +10,9 @@ html
     = stylesheet_link_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
   body
     .container
-      
       header.d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-md-between.py-3.mb-4.border-bottom
+        - if !current_user.nil?
+          = current_user.username
         .col-md-3.mb-2.mb-md-0
           a.d-inline-flex.link-body-emphasis.text-decoration-none href="/"
             svg.bi width="40" height="32" role="img" aria-label="Bootstrap"
@@ -23,17 +24,22 @@ html
             = link_to "Проекты", projects_path, class: 'nav-link px-2'
           li
             = link_to "Задачи", tasks_path, class: 'nav-link px-2'
-        .col-md-3.text-end
-          - if user_signed_in?
-            = button_to "Выйти", destroy_user_session_path, method: :delete, class: "btn btn-outline-primary me-2"
+        .col-md-3.text-end.d-flex.align-items-center
+          .btn-group role="group" 
+          - if !current_user.nil?
+            = button_to "Выйти", logout_path, method: :delete, class: 'btn btn-primary'
           - else
-            = button_to "Регистрация", new_user_registration_path, method: :get, class: "btn btn-outline-primary"
-            = button_to "Войти", new_user_session_path, method: :get, class: "btn btn-outline-primary"
-
-      - if notice
-        p.notice = notice
-      - if alert
-        p.alert = alert
+            = button_to "Войти", login_path, method: :get, class: 'btn btn-outline-primary me-md-2'
+            = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-outline-primary'
+      
+      - flash.each do |type, msg|
+        - case type
+        - when "alert"
+          div class="alert alert-danger"
+            = msg
+        - when "notice"
+          div class="alert alert-success"
+            = msg
 
       = yield
 

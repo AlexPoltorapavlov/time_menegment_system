@@ -1,13 +1,13 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_projects, only: %i[index new create edit]
   before_action :set_task, only: %i[show update edit destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.joins(:project).where(projects: { user_id: current_user.id })
 
     @tasks = @tasks.where(project_id: params[:project_id]) if params[:project_id].present?
 
-    # сортировка
     sorting_tasks
   end
 
@@ -82,7 +82,7 @@ class TasksController < ApplicationController
   private
 
   def set_projects
-    @projects = Project.all
+    @projects = current_user.projects
   end
 
   def set_task
