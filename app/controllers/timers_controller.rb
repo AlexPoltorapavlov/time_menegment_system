@@ -4,6 +4,7 @@
 class TimersController < ApplicationController
   before_action :set_task, only: %i[index create stop edit update destroy]
   before_action :set_timer, only: %i[stop edit update destroy]
+  before_action :authenticate_user!
 
   def index
     @timers = @task.timers

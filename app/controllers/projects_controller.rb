@@ -3,10 +3,11 @@
 # Controller of projects
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[edit update destroy show]
-  # before_action :set_user, only: %i[create]
+  before_action :set_user, only: %i[create index]
+  before_action :authenticate_user!
 
   def index
-    @projects = Project.all
+    @projects = @user.projects
   end
 
   def new
@@ -40,7 +41,12 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
-  def show; end
+  def show
+    unless @project.user == current_user
+      redirect_to projects_path
+      flash.alert = 'У вас нет доступа к этому проекту'
+    end
+  end
 
   private
 
@@ -48,9 +54,9 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
-  # def set_user
-  #   @user = User.find(params[:user_id])
-  # end
+  def set_user
+    @user = current_user
+  end
 
   def project_params
     params.require(:project).permit(:title, :body)

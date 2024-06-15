@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_projects, only: %i[index new create edit]
   before_action :set_task, only: %i[show update edit destroy]
+  before_action :authenticate_user!
 
   def index
     @tasks = Task.all
