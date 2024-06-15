@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to root_path, alert: "Пожалуйста, войдите в систему." unless current_user
+    redirect_to root_path, alert: 'Пожалуйста, войдите в систему.' unless current_user
   end
-
 end

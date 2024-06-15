@@ -41,10 +41,10 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    unless @project.user == current_user
-      redirect_to projects_path
-      flash.alert = 'У вас нет доступа к этому проекту'
-    end
+    return if @project.user == current_user
+
+    redirect_to projects_path
+    flash.alert = 'У вас нет доступа к этому проекту'
   end
 
   private
