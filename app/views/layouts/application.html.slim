@@ -29,12 +29,12 @@ html
           li
             = link_to "Задачи", tasks_path, class: 'nav-link px-2'
         .col-md-3.text-end.d-flex.align-items-center
+          .btn-group role="group" 
           - if !current_user.nil?
             = button_to "Выйти", logout_path, method: :delete, class: 'btn btn-primary'
           - else
-            .btn-group role="group" 
-              = button_to "Войти", login_path, method: :get, class: 'btn btn-outline-primary me-md-2'
-              = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-outline-primary'
+            = button_to "Войти", login_path, method: :get, class: 'btn btn-outline-primary me-md-2'
+            = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-outline-primary'
       
       - flash.each do |type, msg|
         - case type
