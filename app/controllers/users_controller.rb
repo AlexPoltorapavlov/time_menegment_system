@@ -9,6 +9,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path, notice: 'Пользователь успешно создан!'
     else
+      flash.alert = @user.errors.full_messages.join('<br>')
       render :new
     end
   end
