@@ -31,23 +31,15 @@ class TasksController < ApplicationController
   end
 
   def show
-    # Сортировка таймеров
     sorting_timers
   end
 
   def sorting_timers
-    @timers = if params[:sort]
-                case params[:sort]
-                when 'total_time'
-                  @task.timers.order(total_time: :desc)
-                when 'updated_at'
-                  @task.timers.order(updated_at: :desc)
-                else
-                  @task.timers.order(created_at: :desc) # Сортировка по умолчанию
-                end
-              else
-                @task.timers.order(created_at: :desc) # Сортировка по умолчанию
-              end
+    @timers = @task.timers.page(params[:page]) # Пагинация до сортировки
+
+    @timers = @timers.order(total_time: :desc) if params[:sort] == 'total_time'
+    @timers = @timers.order(updated_at: :desc) if params[:sort] == 'updated_at'
+    @timers = @timers.order(created_at: :desc) unless params[:sort] # Сортировка по умолчанию
   end
 
   def create

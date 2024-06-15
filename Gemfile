@@ -77,6 +77,6 @@ end
 gem 'rails-ujs', '~> 0.1.0'
 gem 'slim-rails'
 
-gem "devise", "~> 4.9"
+gem 'devise', '~> 4.9'
 
-gem "kaminari", "~> 1.2"
+gem 'kaminari', '~> 1.2'

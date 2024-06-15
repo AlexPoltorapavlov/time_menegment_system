@@ -1,3 +1,5 @@
+- Kaminari::ActionViewExtension
+
 = link_to 'Редактировать', edit_task_path(@task), class: 'btn btn-outline-primary'
 
 h1 = @task.title
@@ -42,3 +44,5 @@ table.table.table-striped
           = timer.total_time % 60
         td = timer.updated_at
         td = link_to 'Редактировать', edit_task_timer_path(@task, timer)
+  
+  = paginate @timers

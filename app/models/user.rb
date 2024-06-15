@@ -8,5 +8,4 @@ class User < ApplicationRecord
 
   # validates :phonenumber, format: { with: /\A\+\d{8,15}\z/,
   #                                   message: 'Неверный формат номера телефона' }
-  
 end
