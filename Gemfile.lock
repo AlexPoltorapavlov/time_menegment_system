@@ -112,9 +112,6 @@ GEM
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    hpricot (0.8.6)
-    html2slim-ruby3 (0.2.1)
-      hpricot
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -319,7 +316,6 @@ DEPENDENCIES
   bootstrap (~> 5.3.3)
   capybara
   debug
-  html2slim-ruby3
   importmap-rails
   jbuilder
   pg (>= 0.18, < 2.0)
