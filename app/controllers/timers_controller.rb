@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-# Controller of timers
 class TimersController < ApplicationController
   before_action :set_task, only: %i[index create stop edit update destroy]
   before_action :set_timer, only: %i[stop edit update destroy]

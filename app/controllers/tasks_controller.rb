@@ -8,7 +8,6 @@ class TasksController < ApplicationController
 
     @tasks = @tasks.where(project_id: params[:project_id]) if params[:project_id].present?
 
-    # сортировка
     sorting_tasks
   end
 
