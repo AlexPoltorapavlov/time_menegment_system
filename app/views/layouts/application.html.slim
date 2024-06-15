@@ -28,15 +28,21 @@ html
             = link_to "Проекты", projects_path, class: 'nav-link px-2'
           li
             = link_to "Задачи", tasks_path, class: 'nav-link px-2'
-        .col-md-3.text-end
+        .col-md-3.text-end.d-flex.align-items-center
           - if !current_user.nil?
             = button_to "Выйти", logout_path, method: :delete, class: 'btn btn-primary'
           - else
-            = button_to "Войти", login_path, method: :get, class: 'btn btn-outline-primary'
-            = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-outline-primary'
+            .btn-group role="group" 
+              = button_to "Войти", login_path, method: :get, class: 'btn btn-outline-primary me-md-2'
+              = button_to "Регистрация", signup_path, method: :get, class: 'btn btn-outline-primary'
       
       - flash.each do |type, msg|
-        div class="alert alert-#{type}"
-          = msg
+        - case type
+        - when "alert"
+          div class="alert alert-danger"
+            = msg
+        - when "notice"
+          div class="alert alert-success"
+            = msg
 
       = yield
