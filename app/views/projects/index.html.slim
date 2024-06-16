@@ -19,3 +19,5 @@ table.table.table-striped
         td = project.body[0...50] + '...'
         td = project.created_at
         td = project.updated_at
+
+= paginate @projects

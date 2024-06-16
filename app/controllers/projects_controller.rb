@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
   before_action :set_user, only: %i[create index]
 
   def index
-    @projects = @user.projects
+  @projects = @user.projects.page(params[:page])
   end
 
   def new
