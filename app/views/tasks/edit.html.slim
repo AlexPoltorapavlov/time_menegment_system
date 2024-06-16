@@ -17,7 +17,9 @@
               = form.collection_select :project_id, @projects, :id, :title, {}, class: 'form-select' 
             .actions.mt-3
               = form.submit 'Сохранить задачу', class: 'btn btn-primary'
-              br
-              = button_to 'Удалить задачу', task_path(@task), method: :delete, class: 'btn btn-danger mt-3' 
+
+          = form_with(model: @task, url: task_path(@task), method: :delete) do |form|
+            .actions.mt-3
+              = form.submit 'Удалить задачу', class: 'btn btn-danger' 
               
 
