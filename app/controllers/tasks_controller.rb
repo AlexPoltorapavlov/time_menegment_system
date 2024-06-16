@@ -8,21 +8,23 @@ class TasksController < ApplicationController
 
     @tasks = @tasks.where(project_id: params[:project_id]) if params[:project_id].present?
 
+    @tasks = @tasks.page(params[:page]) unless params[:project_id].present? 
+
     sorting_tasks
   end
 
   def sorting_tasks
     @tasks = case params[:sort]
              when 'title'
-               @tasks.order(title: :asc)
+               @tasks.order(title: :asc).page(params[:page])
              when 'created_at'
-               @tasks.order(created_at: :asc)
+               @tasks.order(created_at: :asc).page(params[:page])
              when 'updated_at'
-               @tasks.order(updated_at: :asc)
+               @tasks.order(updated_at: :asc).page(params[:page])
              when 'project'
-               @tasks.includes(:project).order('projects.title')
+               @tasks.includes(:project).order('projects.title').page(params[:page])
              else
-               @tasks.order(created_at: :desc) # сортировка по умолчанию
+               @tasks.order(created_at: :desc).page(params[:page])
              end
   end
 
@@ -35,21 +37,21 @@ class TasksController < ApplicationController
   end
 
   def sorting_timers
-    @timers = @task.timers.page(params[:page]) # Пагинация до сортировки
+    @timers = @task.timers.page(params[:page]) 
 
     @timers = @timers.order(total_time: :desc) if params[:sort] == 'total_time'
     @timers = @timers.order(updated_at: :desc) if params[:sort] == 'updated_at'
-    @timers = @timers.order(created_at: :desc) unless params[:sort] # Сортировка по умолчанию
+    @timers = @timers.order(created_at: :desc) unless params[:sort] 
   end
 
   def create
     @task = Task.new(task_params)
 
     if @task.save
-      flash[:notice] = 'Задача успешно создана'
+      flash.notice = 'Задача успешно создана'
       redirect_to @task
     else
-      flash[:error] = @task.errors.full_messages.join(', ')
+      flash.alert = @task.errors.full_messages.join(', ')
       render :new, status: :unprocessable_entity
     end
   end
@@ -68,6 +70,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
+    flash.notice = 'Задача успешно удалена'
     redirect_to tasks_path
   end
 
