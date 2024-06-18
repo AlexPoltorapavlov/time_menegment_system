@@ -1,0 +1,19 @@
+.container.mt-5
+  .row.justify-content-center
+    .col-md-6
+      .card
+        .card-body
+          h2.text-center Забыли пароль?
+
+          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+            = render "devise/shared/error_messages", resource: resource
+
+            .form-group
+              = f.label :email, class: "form-label"
+              = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email", required: true
+
+            .actions.mt-3
+              = f.submit "Выслать инструкции", class: "btn btn-primary container-fluid"
+
+          p.mt-3.text-center
+            = render "devise/shared/links" 
