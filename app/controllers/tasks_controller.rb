@@ -2,9 +2,10 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_projects, only: %i[index new create edit]
   before_action :set_task, only: %i[show update edit destroy]
+  load_and_authorize_resource
 
   def index
-    @tasks = Task.joins(:project).where(projects: { user_id: current_user.id })
+    @tasks = Task.accessible_by(current_ability)
 
     @tasks = @tasks.where(project_id: params[:project_id]) if params[:project_id].present?
 
@@ -77,7 +78,7 @@ class TasksController < ApplicationController
   private
 
   def set_projects
-    @projects = current_user.projects
+    @projects = Project.accessible_by(current_ability)
   end
 
   def set_task

@@ -13,9 +13,9 @@ class Ability
 
     elsif user.owner?
       can :manage, Project, user_id: user.id
-      can :manage, Task, Project: { user_id: user.id }
-      can :manage, Timer, Task: { Project: { user_id: user.id } }
-
+      can :create, Task 
+      can :manage, Task, project: { user_id: user.id } 
+      can :manage, Timer, task: { project: { user_id: user.id } }
     end
 
     #
