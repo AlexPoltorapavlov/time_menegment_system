@@ -16,6 +16,7 @@ class Ability
       can :create, Task 
       can :manage, Task, project: { user_id: user.id } 
       can :manage, Timer, task: { project: { user_id: user.id } }
+      can :create, Timer
     end
 
     #

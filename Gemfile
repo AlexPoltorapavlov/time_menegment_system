@@ -84,3 +84,5 @@ gem 'kaminari', '~> 1.2'
 gem "letter_opener", "~> 1.10", :group => :development
 
 gem "cancancan", "~> 3.6"
+
+gem "draper", "~> 4.0"

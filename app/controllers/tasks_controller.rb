@@ -12,6 +12,8 @@ class TasksController < ApplicationController
     @tasks = @tasks.page(params[:page]) unless params[:project_id].present? 
 
     sorting_tasks
+
+    @decorated_tasks = TaskDecorator.decorate_collection(@tasks)
   end
 
   def sorting_tasks
@@ -43,6 +45,8 @@ class TasksController < ApplicationController
     @timers = @timers.order(total_time: :desc) if params[:sort] == 'total_time'
     @timers = @timers.order(updated_at: :desc) if params[:sort] == 'updated_at'
     @timers = @timers.order(created_at: :desc) unless params[:sort] 
+
+    @decorated_timers = TimerDecorator.decorate_collection(@timers)
   end
 
   def create

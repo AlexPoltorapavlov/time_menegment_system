@@ -24,17 +24,12 @@ table.table.table-striped
       th scope="col" = link_to 'Дата последнего обновления', tasks_path(sort: 'updated_at', project_id: params[:project_id]) 
   tbody
     - n = 0
-    - @tasks.each do |task| 
+    - @decorated_tasks.each do |task| 
       tr onclick="window.location='#{task_path(task)}'" style="cursor:pointer;"
         td scope="row" = n += 1
         td = task.title
         td = truncate(task.body, length: 50)
-        td 
-          = task.timers.sum(:total_time) / 3600 
-          |:
-          = (task.timers.sum(:total_time) % 3600) / 60 
-          |:
-          = task.timers.sum(:total_time) % 60 
+        td = task.formatted_total_time
         td = task.project.title 
         td = task.created_at 
         td = task.updated_at 

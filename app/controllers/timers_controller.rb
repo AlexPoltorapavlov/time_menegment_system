@@ -1,14 +1,10 @@
 # frozen_string_literal: false
 
 class TimersController < ApplicationController
-  before_action :set_task, only: %i[index create stop edit update destroy]
+  before_action :set_task, only: %i[create stop edit update destroy]
   before_action :set_timer, only: %i[stop edit update destroy]
   before_action :authenticate_user!
   load_and_authorize_resource
-
-  def index
-    @timers = @task.timers
-  end
 
   def create
     @timer = @task.timers.build(started_at: Time.current)
@@ -57,7 +53,7 @@ class TimersController < ApplicationController
   end
 
   def new_total_time
-    time_params = params[:timer]
+    time_params = params.require(:timer).permit(:hours, :minutes, :seconds)
     hours = time_params[:hours].to_i
     minutes = time_params[:minutes].to_i
     seconds = time_params[:seconds].to_i
@@ -65,7 +61,7 @@ class TimersController < ApplicationController
     (hours * 3600 + minutes * 60 + seconds).to_i
   end
 
-  def timer_params
-    params.require(:timer).permit(:hours, :minutes, :seconds)
-  end
+  # def timer_params
+  #   params.require(:timer).permit(:hours, :minutes, :seconds)
+  # end
 end
