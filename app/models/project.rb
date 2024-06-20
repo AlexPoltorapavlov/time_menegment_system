@@ -8,7 +8,7 @@ class Project < ApplicationRecord
   validates :body, presence: true, length: { minimum: 5 }
 
   scope :by_project, ->(project_id) { where(project_id: project_id) }
-  scope :sorted_by, ->(sort_option) {
+  scope :sorted_by, lambda { |sort_option|
     case sort_option
     when 'title'
       order(title: :asc)
@@ -22,5 +22,4 @@ class Project < ApplicationRecord
       order(created_at: :desc)
     end
   }
-
 end

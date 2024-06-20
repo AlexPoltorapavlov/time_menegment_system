@@ -81,12 +81,12 @@ gem 'devise', '~> 4.9'
 
 gem 'kaminari', '~> 1.2'
 
-gem "letter_opener", "~> 1.10", :group => :development
+gem 'letter_opener', '~> 1.10', group: :development
 
-gem "cancancan", "~> 3.6"
+gem 'cancancan', '~> 3.6'
 
-gem "draper", "~> 4.0"
+gem 'draper', '~> 4.0'
 
-gem "paranoia", "~> 2.6"
+gem 'paranoia', '~> 2.6'
 
-gem "has_scope", "~> 0.8.2"
+gem 'has_scope', '~> 0.8.2'

@@ -3,7 +3,7 @@ class Timer < ApplicationRecord
 
   belongs_to :task
 
-  scope :sorted_by, ->(sort_option) {
+  scope :sorted_by, lambda { |sort_option|
     case sort_option
     when 'total_time'
       order(total_time: :desc)
@@ -15,5 +15,4 @@ class Timer < ApplicationRecord
       order(created_at: :desc)
     end
   }
-
 end

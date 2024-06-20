@@ -6,7 +6,6 @@ class TaskDecorator < Draper::Decorator
     hours = (total_time / 3600).to_i
     minutes = ((total_time % 3600) / 60).to_i
     seconds = (total_time % 60).to_i
-    format("%02d:%02d:%02d", hours, minutes, seconds)
+    format('%<hours>02d:%<minutes>02d:%<seconds>02d', hours: hours, minutes: minutes, seconds: seconds)
   end
-
 end
