@@ -5,9 +5,9 @@
 = form_with url: tasks_path, method: :get, local: true, class: "mb-3" do 
   .row.align-items-center
     .col-md-3
-      = label_tag :project_id, 'Фильтр по проекту', class: "form-label"
+      = label_tag :by_project, 'Фильтр по проекту', class: "form-label"
     .col-md-6
-      = select_tag :project_id, options_from_collection_for_select(@projects, :id, :title, params[:project_id]), include_blank: "Все проекты", class: "form-select"
+      = select_tag :by_project, options_from_collection_for_select(@projects, :id, :title, params[:by_project]), include_blank: "Все проекты", class: "form-select"
     .col-md-3
       = submit_tag 'Применить', class: 'btn btn-primary me-md-2' 
       = link_to '+ Новая задача', new_task_path, class: 'btn btn-outline-primary'
@@ -16,12 +16,12 @@ table.table.table-striped
   thead
     tr
       th scope="col" #
-      th scope="col" = link_to 'Название задачи', tasks_path(sort: 'title', project_id: params[:project_id]) 
+      th scope="col" = link_to 'Название задачи', tasks_path(by_project: params[:by_project], sorted_by: 'title') 
       th scope="col" Описание задачи
-      th scope="col" Всего времени затрачено
-      th scope="col" = link_to 'Проект', tasks_path(sort: 'project', project_id: params[:project_id]) 
-      th scope="col" = link_to 'Дата создания задачи', tasks_path(sort: 'created_at', project_id: params[:project_id]) 
-      th scope="col" = link_to 'Дата последнего обновления', tasks_path(sort: 'updated_at', project_id: params[:project_id]) 
+      th scope="col" = link_to 'Всего времени затрачено', tasks_path(by_project: params[:by_project], sorted_by: 'total_time')
+      th scope="col" = link_to 'Проект', tasks_path(by_project: params[:by_project], sorted_by: 'project') 
+      th scope="col" = link_to 'Дата создания задачи', tasks_path(by_project: params[:by_project], sorted_by: 'created_at') 
+      th scope="col" = link_to 'Дата последнего обновления', tasks_path(by_project: params[:by_project], sorted_by: 'updated_at') 
   tbody
     - n = 0
     - @decorated_tasks.each do |task| 

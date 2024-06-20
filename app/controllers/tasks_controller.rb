@@ -4,31 +4,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show update edit destroy]
   load_and_authorize_resource
 
+  has_scope :by_project
+  has_scope :sorted_by
+
   def index
-    @tasks = Task.accessible_by(current_ability)
-
-    @tasks = @tasks.where(project_id: params[:project_id]) if params[:project_id].present?
-
-    @tasks = @tasks.page(params[:page]) unless params[:project_id].present? 
-
-    sorting_tasks
-
+    @tasks = apply_scopes(Task).accessible_by(current_ability).page(params[:page])
     @decorated_tasks = TaskDecorator.decorate_collection(@tasks)
-  end
-
-  def sorting_tasks
-    @tasks = case params[:sort]
-             when 'title'
-               @tasks.order(title: :asc).page(params[:page])
-             when 'created_at'
-               @tasks.order(created_at: :asc).page(params[:page])
-             when 'updated_at'
-               @tasks.order(updated_at: :asc).page(params[:page])
-             when 'project'
-               @tasks.includes(:project).order('projects.title').page(params[:page])
-             else
-               @tasks.order(created_at: :desc).page(params[:page])
-             end
   end
 
   def new
