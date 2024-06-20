@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_19_054223) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_20_134159) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_054223) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_projects_on_deleted_at"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -29,6 +31,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_054223) do
     t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 
@@ -39,6 +43,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_054223) do
     t.bigint "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_timers_on_deleted_at"
     t.index ["task_id"], name: "index_timers_on_task_id"
   end
 
@@ -57,7 +63,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_054223) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", default: "owner"
+    t.datetime "deleted_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
