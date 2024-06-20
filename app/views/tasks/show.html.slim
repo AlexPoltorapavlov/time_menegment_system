@@ -21,21 +21,19 @@ h3 Все секундомеры
 table.table.table-striped
   thead
     tr
-      th scope="col"
-        = n = 0
-      th scope="col"
-        = link_to 'Итоговое время', task_path(@task, sort: 'total_time')
-      th scope="col"
-        = link_to 'Дата последнего изменения', task_path(@task, sort: 'updated_at')
-      th scope="col"
-
+      th scope="col" #
+      th scope="col" = link_to 'Итоговое время', task_path(@task, sort: 'total_time')
+      th scope="col" = link_to 'Дата последнего изменения', task_path(@task, sort: 'updated_at')
+      th scope="col" = link_to 'Дата создания', task_path(@task, sort: 'created_at')
   tbody
+    - n = 0
     - @decorated_timers.each do |timer| 
       tr
         th scope="row"
           = n = n + 1
         td = timer.formatted_time
         td = timer.updated_at
+        td = timer.created_at
         td = link_to 'Редактировать', edit_task_timer_path(@task, timer)
   
 = paginate @timers

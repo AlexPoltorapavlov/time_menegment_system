@@ -5,29 +5,20 @@ class TasksController < ApplicationController
   load_and_authorize_resource
 
   has_scope :by_project
-  has_scope :sorted_by
+  has_scope :sorted_by, only: :index
 
   def index
     @tasks = apply_scopes(Task).accessible_by(current_ability).page(params[:page])
     @decorated_tasks = TaskDecorator.decorate_collection(@tasks)
   end
 
+  def show
+    @timers = apply_scopes(@task.timers).sorted_by(params[:sort]).page(params[:page])
+    @decorated_timers = TimerDecorator.decorate_collection(@timers)
+  end
+
   def new
     @task = Task.new
-  end
-
-  def show
-    sorting_timers
-  end
-
-  def sorting_timers
-    @timers = @task.timers.page(params[:page]) 
-
-    @timers = @timers.order(total_time: :desc) if params[:sort] == 'total_time'
-    @timers = @timers.order(updated_at: :desc) if params[:sort] == 'updated_at'
-    @timers = @timers.order(created_at: :desc) unless params[:sort] 
-
-    @decorated_timers = TimerDecorator.decorate_collection(@timers)
   end
 
   def create
