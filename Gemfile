@@ -86,3 +86,5 @@ gem "letter_opener", "~> 1.10", :group => :development
 gem "cancancan", "~> 3.6"
 
 gem "draper", "~> 4.0"
+
+gem "paranoia", "~> 2.6"
