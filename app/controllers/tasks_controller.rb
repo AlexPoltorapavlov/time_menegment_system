@@ -24,20 +24,18 @@ class TasksController < AuthenticatedController
     @task = Task.new(task_params)
 
     if @task.save
-      flash.notice = 'Задача успешно создана'
-      redirect_to @task
+      redirect_to @task, notice: 'Задача успешно создана'
     else
-      flash.alert = @task.errors.full_messages.join(', ')
+      flash.now[:error] = @task.errors.full_messages.join(', ')
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @task.update(task_params)
-      flash[:notice] = 'Задача успешно сохранена'
-      redirect_to @task
+      redirect_to @task, notice: 'Задача успешно сохранена'
     else
-      flash[:error] = @task.errors.full_messages.join(', ')
+      flash.now[:error] = @task.errors.full_messages.join(', ')
       render :edit, status: :unprocessable_entity
     end
   end
@@ -46,8 +44,7 @@ class TasksController < AuthenticatedController
 
   def destroy
     @task.destroy
-    flash.notice = 'Задача успешно удалена'
-    redirect_to tasks_path
+    redirect_to tasks_path, notice: 'Задача успешно удалена'
   end
 
   private
