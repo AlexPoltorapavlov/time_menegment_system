@@ -1,10 +1,9 @@
-# frozen_string_literal: false
-
 class ProjectsController < AuthenticatedController
   load_and_authorize_resource
+  has_scope :sorted_by, only: :index 
 
   def index
-    @projects = Project.accessible_by(current_ability).page(params[:page])
+    @projects = apply_scopes(Project).accessible_by(current_ability).page(params[:page])
   end
 
   def new

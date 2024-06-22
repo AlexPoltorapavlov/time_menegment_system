@@ -16,8 +16,6 @@ class Project < ApplicationRecord
       order(created_at: :asc)
     when 'updated_at'
       order(updated_at: :asc)
-    when 'project'
-      includes(:project).order('projects.title')
     else
       order(created_at: :desc)
     end
