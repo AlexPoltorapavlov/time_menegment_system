@@ -26,7 +26,7 @@ class ProjectsController < AuthenticatedController
 
   def update
     if @project.update(project_params)
-      redirect_to @project
+      redirect_to @project, notice: "Проект успешно обновлен!"
     else
       flash.now[:error] = @project.errors.full_messages.to_sentence
       render :edit, status: :unprocessable_entity
