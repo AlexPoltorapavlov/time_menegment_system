@@ -1,5 +1,4 @@
-class TasksController < ApplicationController
-  before_action :authenticate_user!
+class TasksController < AuthenticatedController
   before_action :set_projects, only: %i[index new create edit]
   before_action :set_task, only: %i[show update edit destroy]
   load_and_authorize_resource

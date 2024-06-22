@@ -1,7 +1,6 @@
 # frozen_string_literal: false
 
-class ProjectsController < ApplicationController
-  before_action :authenticate_user!
+class ProjectsController < AuthenticatedController
   load_and_authorize_resource
 
   def index
