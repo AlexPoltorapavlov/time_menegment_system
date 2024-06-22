@@ -8,16 +8,6 @@ class Project < ApplicationRecord
   validates :body, presence: true, length: { minimum: 5 }
 
   scope :by_project, ->(project_id) { where(project_id: project_id) }
-  scope :sorted_by, lambda { |sort_option|
-    case sort_option
-    when 'title'
-      order(title: :asc)
-    when 'created_at'
-      order(created_at: :asc)
-    when 'updated_at'
-      order(updated_at: :asc)
-    else
-      order(created_at: :desc)
-    end
-  }
+  scope :sorted_by, ->(sort_option) { order(sort_option.to_sym => :asc) if column_names.include?(sort_option) }
+
 end
