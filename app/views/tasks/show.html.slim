@@ -31,7 +31,7 @@ table.table.table-striped
       tr
         th scope="row"
           = n = n + 1
-        td = timer.formatted_time
+        td = formatted_time(timer.total_time)
         td = timer.updated_at
         td = timer.created_at
         td = link_to 'Редактировать', edit_task_timer_path(@task, timer)
