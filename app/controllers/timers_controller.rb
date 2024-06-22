@@ -9,18 +9,18 @@ class TimersController < AuthenticatedController
     @timer = @task.timers.build(started_at: Time.current)
 
     if @timer.save
-      flash[:notice] = 'Таймер успешно создан'
+      flash.notice = 'Таймер успешно создан'
     else
-      flash[:alert] = 'Не удалось создать таймер'
+      flash.alert = 'Не удалось создать таймер'
     end
     redirect_to @task
   end
 
   def stop
     if @timer.update(stoped_at: Time.current, total_time: (Time.current - @timer.started_at).to_i)
-      flash[:notice] = 'Таймер успешно обновлен'
+      flash.notice = 'Таймер успешно обновлен'
     else
-      flash[:alert] = 'Не удалось обновить таймер'
+      flash.alert = 'Не удалось обновить таймер'
     end
     redirect_to @task
   end
@@ -29,8 +29,7 @@ class TimersController < AuthenticatedController
 
   def update
     if @timer.update(total_time: new_total_time)
-      flash[:notice] = 'Запись времени успешно обновлена'
-      redirect_to task_path(@task)
+      redirect_to task_path(@task), notice: 'Запись времени успешно обновлена'
     else
       render :edit
     end
@@ -38,7 +37,7 @@ class TimersController < AuthenticatedController
 
   def destroy
     @timer.destroy
-    redirect_to @task
+    redirect_to @task, notice: 'Запись времени успешно удалена!'
   end
 
   private
@@ -60,7 +59,4 @@ class TimersController < AuthenticatedController
     (hours * 3600 + minutes * 60 + seconds).to_i
   end
 
-  # def timer_params
-  #   params.require(:timer).permit(:hours, :minutes, :seconds)
-  # end
 end
