@@ -1,6 +1,6 @@
 class ProjectsController < AuthenticatedController
   load_and_authorize_resource
-  has_scope :sorted_by, only: :index 
+  has_scope :sorted_by, only: :index
 
   def index
     @projects = apply_scopes(Project).accessible_by(current_ability).page(params[:page])
@@ -25,7 +25,7 @@ class ProjectsController < AuthenticatedController
 
   def update
     if @project.update(project_params)
-      redirect_to @project, notice: "Проект успешно обновлен!"
+      redirect_to @project, notice: 'Проект успешно обновлен!'
     else
       flash.now[:error] = @project.errors.full_messages.to_sentence
       render :edit, status: :unprocessable_entity
@@ -34,7 +34,7 @@ class ProjectsController < AuthenticatedController
 
   def destroy
     @project.destroy
-    redirect_to projects_path
+    redirect_to projects_path, notice: 'Проект успешно удален'
   end
 
   def show; end

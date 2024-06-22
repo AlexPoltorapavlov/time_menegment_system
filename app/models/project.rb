@@ -9,5 +9,4 @@ class Project < ApplicationRecord
 
   scope :by_project, ->(project_id) { where(project_id: project_id) }
   scope :sorted_by, ->(sort_option) { order(sort_option.to_sym => :asc) if column_names.include?(sort_option) }
-
 end

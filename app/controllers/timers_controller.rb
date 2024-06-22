@@ -58,5 +58,4 @@ class TimersController < AuthenticatedController
 
     (hours * 3600 + minutes * 60 + seconds).to_i
   end
-
 end

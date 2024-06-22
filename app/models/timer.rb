@@ -3,12 +3,11 @@ class Timer < ApplicationRecord
 
   belongs_to :task
 
-  scope :sorted_by, ->(sort_option) {
+  scope :sorted_by, lambda { |sort_option|
     if column_names.include?(sort_option)
       order(sort_option.to_sym => :desc)
     else
       order(created_at: :desc)
     end
   }
-
 end
