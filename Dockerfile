@@ -1,62 +1,49 @@
-# syntax = docker/dockerfile:1
+# /path/to/app/Dockerfile
+FROM ruby:3.0.2-alpine
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.0.2
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+# Установка часового пояса
+RUN apk add --update tzdata && \
+    cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime && \
+    echo "Europe/Moscow" > /etc/timezone
 
-# Rails app lives here
-WORKDIR /rails
+# Установка в контейнер runtime-зависимостей приложения
+RUN apk add --update --virtual runtime-deps \
+    postgresql-client \
+    nodejs \
+    libffi-dev \
+    readline \
+    sqlite \
+    yarn
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+# Соберем все во временной директории
+WORKDIR /tmp
+ADD Gemfile* ./
 
+RUN apk add --virtual build-deps \
+    build-base \
+    openssl-dev \
+    postgresql-dev \
+    libc-dev \
+    linux-headers \
+    libxml2-dev \
+    libxslt-dev \
+    readline-dev \
+    && bundle install --jobs=2 && \
+    apk del build-deps
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
+# Копирование кода приложения в контейнер
+ENV APP_HOME /time_menegment_system
+COPY . $APP_HOME
+WORKDIR $APP_HOME
 
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config
+# Настройка переменных окружения для production
+ENV RAILS_ENV=production \
+    RACK_ENV=production
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
-
-# Copy application code
-COPY . .
-
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
-
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
-
-# Final stage for app image
-FROM base
-
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
-
-# Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
-
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Start the server by default, this can be overwritten at runtime
+# Миграция базы данных приложения
+RUN rails db:migrate
+# Проброс порта 3000
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+
+# Запуск по умолчанию сервера puma
+CMD ["rails", "server", "-b", "0.0.0.0"]
