@@ -1,9 +1,8 @@
 #!/bin/bash -e
 
 # If running the rails server then create or migrate existing database
-if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  bundle exec rails db:prepare
-  bbundle exec rails db:create
+if [ "${1}" == "bash" ] && [ "${2}" == "-c" ] && [[ "${3}" == *"bundle exec rails server"* ]]; then
+  bundle exec rails db:create
   bundle exec rails db:migrate
 fi
 

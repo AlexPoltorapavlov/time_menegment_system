@@ -25,8 +25,18 @@ RUN bundle install --without development test
 # Копируем все файлы приложения
 COPY . .
 
+# Copy docker-entrypoint from the correct directory
+COPY bin/docker-entrypoint /usr/local/bin/docker-entrypoint
+
+# Устанавливаем права на выполнение для docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
+
 # Предварительная компиляция assets
 RUN bundle exec rails assets:precompile
+
+# Устанавливаем docker-entrypoint как entrypoint
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
+
 # Открываем порт 3000
 EXPOSE 3000
 
