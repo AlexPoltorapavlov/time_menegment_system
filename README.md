@@ -55,3 +55,13 @@ rails db:seed
 rails server
 ```
 2. Перейдите в браузер и откройте http://localhost:3000.
+
+Создайте файл ".env" и заполните там следующие переменные:
+```env
+RAILS_ENV=development
+POSTGRES_HOST=db
+POSTGRES_DB=name_of_bd
+POSTGRES_USER=name_of_user
+POSTGRES_PASSWORD=password_of_user
+RAILS_MASTER_KEY=check_config_master_dot_key
+```
