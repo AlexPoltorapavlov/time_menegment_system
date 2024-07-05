@@ -91,3 +91,5 @@ gem 'draper', '~> 4.0'
 gem 'paranoia', '~> 2.6'
 
 gem 'has_scope', '~> 0.8.2'
+
+gem "webpacker", "~> 5.4"

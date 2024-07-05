@@ -21,14 +21,21 @@ class ProjectsController < AuthenticatedController
     end
   end
 
-  def edit; end
+  def edit
+    @project = Project.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+  end
 
   def update
     if @project.update(project_params)
-      redirect_to @project, notice: 'Проект успешно обновлен!'
+      respond_to do |format|
+        format.json { render json: @project }
+      end
     else
-      flash.now[:error] = @project.errors.full_messages.to_sentence
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
@@ -37,7 +44,9 @@ class ProjectsController < AuthenticatedController
     redirect_to projects_path, notice: 'Проект успешно удален'
   end
 
-  def show; end
+  def show
+    @project = Project.find(params[:id])
+  end
 
   private
 

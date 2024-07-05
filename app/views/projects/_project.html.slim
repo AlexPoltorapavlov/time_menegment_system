@@ -1,0 +1,13 @@
+= turbo_frame_tag dom_id(project) do
+  .card
+    .card-body
+      h5.card-title = project.title
+      p.card-text = project.body
+      p.card-text
+        | Created at:
+        = project.created_at
+      p.card-text
+        | Updated at:
+        = project.updated_at
+      = link_to 'Редактировать', edit_project_path(project), class: 'btn btn-primary', turbo: true
+

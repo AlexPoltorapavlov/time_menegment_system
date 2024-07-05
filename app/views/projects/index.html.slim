@@ -1,4 +1,4 @@
-= link_to '+ Новый проект', new_project_path, class: 'btn btn-outline-primary me-2'
+= link_to '+ Новый проект', new_project_path, class: 'btn btn-outline-primary me-2', turbo: true
 
 h1 Ваши проекты
 
@@ -10,14 +10,9 @@ table.table.table-striped
       th scope="col" = link_to 'Описание проекта', projects_path(sorted_by: 'body')
       th scope="col" = link_to 'Дата создания проекта', projects_path(sorted_by: 'created_at')
       th scope="col" = link_to 'Дата последнего обновления', projects_path(sorted_by: 'updated_at')
-  tbody
-    - n = 0
-    - @projects.each do |project|
-      tr onclick="window.location='#{project_path(project)}'" style="cursor:pointer;"
-        th scope="row" = n += 1
-        td = project.title
-        td = project.body[0...50] + '...'
-        td = project.created_at
-        td = project.updated_at
+
+- @projects.each do |project|
+  = turbo_frame_tag dom_id(project) do
+    = render partial: "project", locals: { project: project }
 
 = paginate @projects
