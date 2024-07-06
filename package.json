@@ -1,0 +1,11 @@
+{
+  "name": "time_menegment_system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@gitlab.edu.rnds.pro:poltorapavlov.iskander/time_menegment_system.git",
+  "author": "Alex Poltorapavlov <poltorapavlov.iskander@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@hotwired/turbo-rails": "^8.0.4"
+  }
+}

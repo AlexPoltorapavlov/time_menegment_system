@@ -1,15 +1,14 @@
-h2 Редактирование проекта
+turbo-frame id="edit_project"
+  = form_with model: @project, url: project_path(@project), data: { turbo_method: :patch, turbo_frame: 'edit_project' } do |f|
+    section.new-project_field
+      div
+        h4 Название проекта
+        = f.text_field :title, class: "form-control"
+      div
+        h4 Описание проекта
+        = f.text_area :body, class: "form-control"
+      div
+        = f.submit "Сохранить проект", class: "btn btn-success mt-3"
 
-= form_with model: @project, url: project_path(@project), method: :patch do |f|
-  section.new-project_field
-    div
-      h4 Название проекта
-      = f.text_field :title, class: "form-control"
-    div
-      h4 Описание проекта
-      = f.text_area :body, class: "form-control"
-    div
-      = f.submit "Сохранить проект", class: "btn btn-success"
-
-hr
-= button_to 'Удалить проект', project_path(@project), method: :delete, class: 'btn btn-danger'
+  = form_with model: @project, url: project_path(@project), method: :delete do |f|
+    = f.submit 'Удалить проект', class: 'btn btn-danger mt-3'

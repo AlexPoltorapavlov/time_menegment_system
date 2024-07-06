@@ -20,7 +20,13 @@ Rails.application.routes.draw do
 
   # resources :sessions, only: %i[new create destroy]
 
-  resources :projects
+  resources :projects do
+    member do
+      get :edit
+      patch :update
+    end
+  end
+
   resources :tasks do
     resources :timers do
       member do

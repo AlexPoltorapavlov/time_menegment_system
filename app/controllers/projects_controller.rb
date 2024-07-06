@@ -2,6 +2,8 @@ class ProjectsController < AuthenticatedController
   load_and_authorize_resource
   has_scope :sorted_by, only: :index
 
+  authorize_resource only: [:edit, :update]
+
   def index
     @projects = apply_scopes(Project).accessible_by(current_ability).page(params[:page])
   end
